@@ -1,0 +1,7 @@
+{
+    "songs":[
+        {"name": "Jab Tak", "cover": "jabtak.jpg", "audio": "jabtak.mp3"},
+        {"name": "Maston Ka Jhund", "cover": "mastonKaJhund.jpg", "audio": "mastonKaJhund.mp3"},
+        {"name": "Way Back Home", "cover": "wayBackHome.jpg", "audio": "wayBackHome.mp3"}
+    ]
+}

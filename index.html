@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyrica</title>
+    <link rel="stylesheet" href="./src/output.css">
+    <link rel="stylesheet" href="./src/animation.css">
+    <style>
+        .masked {
+            border-radius: 50%;
+            mask-image: url('/cd.webp');
+            width: 100%;
+            height: auto;
+            mask-size: cover;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            border: 2px solid #fff;
+            top: 50%;
+            transition: transform 1s ease-in;
+            animation-name: playCD;
+            animation-play-state: paused;
+            animation-timing-function: ease-in-out;
+            transform: translateY(-50%);
+        }
+
+        #cdplate {
+            mask-image: url('/playercd.png');
+            height: auto;
+            height: 40vh;
+            mask-size: cover;
+            mask-repeat: no-repeat;
+            mask-position: left;
+            transition: transform 2s ease-in-out;
+        }
+        
+    </style>
+</head>
+
+<body class="bg-gradient-to-b from-slate-900 to-zinc-600 h-fit">
+    <nav
+        class="text-white flex justify-evenly items-center h-[10vh] w-screen fixed z-50 backdrop-blur-sm drop-shadow-md">
+        <a href="#" class="text-xl font-semibold w-16 hover:text-blue-500">Home</a>
+        <a href="#" class="text-xl font-semibold w-16 hover:text-blue-500">About</a>
+        <a href="#" class="text-xl font-semibold w-16 hover:text-blue-500">Events</a>
+        <a href="#" class="text-xl font-semibold w-16 hover:text-blue-500">Contact</a>
+        <button class="bg-blue-500 text-white px-4 py-1 rounded">Register</button>
+    </nav>
+    <div class="h-screen w-screenflex overflow-x-hidden">
+        <div class="h-max w-max absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex z-10"
+            id="title-container">
+            <span id="title" class="text-[#538ff8] font-[Poppins] font-bold text-7xl w-max text-center h-max"></span>
+            <span class="bg-white w-1 h-16" id="caret"> </span>
+        </div>
+    </div>
+    <div class="h-screen w-screen z-0 relative flex flex-col-reverse overflow-hidden">
+        <img src="/crowd.png" alt="" class="absolute bottom-0 z-0"
+            style="scale: 1.3; animation: dance ease-in-out 15s infinite;">
+        <div id="records" class="w-full h-full overflow-y-hidden flex justify-between items-center">
+            <div id="items1" class="h-full w-[15%] flex flex-col relative">
+
+            </div>
+            <img src="/player.png" alt="" id="cdplayer"
+                class="h-[40vh] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <img src="/playercd.png" alt="" id="cdplate"
+                class="h-[40vh] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+            <div id="items2" class="h-full w-[15%] flex flex-col relative">
+            </div>
+        </div>
+    </div>
+    <div class="h-screen w-screen bg-[#00091f] flex justify-center items-center">
+        <form action="" class="w-[40%] h-[70%] bg-[#52525b80] rounded-lg flex flex-col p-8 gap-5" id="form">
+            <h2 class="text-[#538ff8] font-[Poppins] font-bold text-5xl text-center">Register Now</h2>
+            <div class="grid grid-cols-2 flex-1">
+                <label for="name" class="text-white mb-2">Name</label>
+                <input type="text" id="name" name="name" class="p-2 rounded mb-4">
+                <label for="email" class="text-white mb-2">Email</label>
+                <input type="email" id="email" name="email" class="p-2 rounded mb-4">
+                <label for="number" class="text-white mb-2">Number</label>
+                <input type="tel" id="number" name="number" class="p-2 rounded mb-4">
+                <label for="gender" class="text-white mb-2">Gender</label>
+                <select id="gender" name="gender" class="p-2 rounded mb-4">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <label for="regnumber" class="text-white mb-2">Registration Number</label>
+                <input type="text" id="regnumber" name="regnumber" class="p-2 rounded mb-4">
+                <label for="batch" class="text-white mb-2">Batch</label>
+                <input type="text" id="batch" name="batch" class="p-2 rounded mb-4">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Submit</button>
+        </form>
+    </div>
+    <audio src="#" controls id="player" class="hidden"></audio>
+    <script src="intro.js"></script>
+    <script>
+        function getRandomPosition() {
+            const x = Math.floor(Math.random() * window.innerWidth);
+            const y = Math.floor(Math.random() * -window.innerHeight);
+            return { x, y };
+        }
+
+        setInterval(() => {
+            for (let i = 0; i < 10; i++) {
+                const img = document.createElement('span');
+                img.src = '/snowflake.svg'; // Replace with the actual path to your snowflake image
+                img.opacity = 0.5;
+                img.style.background = 'url(/snowflake.svg)';
+                img.style.backgroundSize = 'cover';
+                img.style.backgroundRepeat = 'no-repeat';
+                img.className = 'snow';
+                img.style.position = 'absolute';
+                const { x, y } = getRandomPosition();
+                img.style.left = `${x}px`;
+                img.style.top = `${y}px`;
+                img.style.width = '28px';
+                img.style.height = '28px';
+                document.body.appendChild(img);
+                img.addEventListener('animationend', () => {
+                    img.remove();
+                });
+            }
+        }, 2000);
+
+        const items2 = document.getElementById('items2');
+        fetch('/src/songs/songs.json')
+            .then(response => { return response.json() })
+            .then(data => {
+                data.songs.forEach((song, index) => {
+                    let cd = document.createElement('img');
+                    cd.src = `/src/songs/covers/${song.cover}`;
+                    cd.style.position = 'absolute';
+                    cd.classList.add('masked');
+                    cd.draggable = true;
+                    cd.addEventListener('dragstart', (e) => {
+                        e.dataTransfer.setData('text/plain', null);
+                        cd.style.opacity = 0.5;
+                        const dragImage = cd.cloneNode(true);
+                        dragImage.style.width = `${cd.offsetWidth}px`;
+                        dragImage.style.height = `${cd.offsetHeight}px`;
+                        dragImage.style.pointerEvents = 'none';
+                        dragImage.classList.add('drag-image');
+                        document.body.appendChild(dragImage);
+                        e.dataTransfer.setDragImage(dragImage, dragImage.offsetWidth / 2, dragImage.offsetHeight / 2);
+                        e.dataTransfer.setData('text/plain', song.audio);
+                    });
+                    cd.addEventListener('dragend', () => {
+                        document.querySelector('.drag-image').remove();
+                        cd.style.opacity = 1;
+                    });
+                    cd.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                    });
+                    items2.appendChild(cd);
+                });
+            })
+            .catch(error => console.error('Error fetching songs:', error));
+
+        const items1 = document.getElementById('items1');
+        items1.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        items1.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const cd = document.querySelector('.masked[style*="opacity: 0.5"]');
+            if (cd) {
+                items1.appendChild(cd);
+                cd.style.opacity = 1;
+                cd.style.position = 'absolute';
+            }
+        });
+        items2.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        items2.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const cd = document.querySelector('.masked[style*="opacity: 0.5"]');
+            if (cd) {
+                items2.appendChild(cd);
+                cd.style.opacity = 1;
+                cd.style.position = 'absolute';
+            }
+        });
+        const cdplate = document.getElementById('cdplate');
+        cdplate.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        cdplate.addEventListener('drop', (e) => {
+            e.preventDefault();
+            console.log('drop');
+
+            const cd = document.querySelector('.masked[style*="opacity: 0.5"]');
+            if (cd) {
+                cdplate.src = cd.src;
+                cd.style.display = 'none';
+                play(e.dataTransfer.getData('text/plain'), cd);
+            }
+        });
+    </script>
+    <script>
+        const player = document.getElementById('player');
+        let cd = null;
+        function play(song, newCd) {
+            player.src = `/src/songs/audio/${song}`;
+            cd = newCd;
+            console.log(song);
+            cdplate.style.zIndex = 0;
+            cdplate.style.transform = 'translateX(-100%) translateY(-50%)';
+            setTimeout(() => {
+                player.play();
+            }, 2000);
+        }
+        function stop() {
+            player.pause();
+            player.src = '';
+            cd.style.display = 'block';
+            cd = null;
+            cdplate.style.transform = 'translate(-50%, -50%)';
+            cdplate.src = '/playercd.png';
+            let clearer = setInterval(() => {
+                cdplate.style.zIndex = 30;
+                console.log('zIndex');
+                clearInterval(clearer);
+            }, 2000);
+        }
+
+        player.addEventListener('ended', () => {
+            console.log('ended');
+            stop();
+        });
+        document.getElementById('cdplayer').addEventListener('click', () => {
+            if (player.src) {
+                console.log('stop');
+
+                stop();
+            }
+        });
+    </script>
+</body>
+
+</html>
